@@ -55,3 +55,46 @@ class MovieSerializer(serializers.ModelSerializer):
             "uploaded_at",
             "description",
         ]
+
+class SeriesListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Series
+        fields = [
+            "id",
+            "image",
+            "title",
+        ]
+
+class SeasonListSerializer(serializers.ModelSerializer):
+    category = CategorySerializer(many=True, read_only=True)
+    class Meta:
+        model = Season
+        fields = [
+            "category",
+            "id",
+            "image",
+            "title",
+        ]
+
+class EpisodeListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Episode
+        fields = [
+            "id",
+            "image",
+            "title",
+        ]
+
+class SeasonDetailSerializer(serializers.ModelSerializer):
+    category = CategorySerializer(many=True, read_only=True)
+    episodes = EpisodeListSerializer(many=True, read_only=True)
+    class Meta:
+        model = Season
+        fields = [
+            "id",
+            "image",
+            "title",
+            "description",
+            "category",
+            "episodes"
+        ]
